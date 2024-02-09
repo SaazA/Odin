@@ -1,0 +1,15 @@
+#container{
+    align-items: stretch;
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+     
+}
+body{
+    margin-top: 500px;
+}
+.button{
+    padding: 10px;
+    margin: 50px;
+}
