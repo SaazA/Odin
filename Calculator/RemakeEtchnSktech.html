@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <style>
+        #container{
+            justify-content: center;
+            align-items: center;
+            margin-left: 50%;
+        }
+        .squarebox{
+            width: 40px;
+            height: 40px;
+            border: 2px solid black;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+
+
+
+    <script>
+
+const container = document.querySelector("#container");
+const div = document.createElement("div");
+div.classList.add("div");
+let num1 = 16;
+const button = document.createElement("button");
+button.textContent = "Grid Formation";
+button.addEventListener('click' , ()=>{
+     num1 = prompt("enter The Specs");
+     console.log(num1)
+     if(!isNaN(num1) && num1>0){
+         creategrid();
+    }else{
+        alert("Enter Numberics and above 0");
+     }
+})
+button.classList.add("button");
+container.appendChild(button);
+container.appendChild(div);
+
+
+
+function creategrid(){
+    div.innerHTML = "";
+    let dimension = num1*num1;
+console.log(dimension);
+    for (let i=0;i<dimension;i++){
+        const squareBox = document.createElement("div");
+        squareBox.classList.add("squarebox");
+        
+        squareBox.addEventListener('mouseover',()=>{
+            squareBox.style.backgroundColor = generaterandomcolor();
+        });
+        div.appendChild(squareBox);
+    }
+}
+
+function generaterandomcolor(){
+    const letters = "ABCDEF1234567890";
+    let color = "#";
+    for(let j=0;j<6;j++){
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+creategrid();
+    </script>
+</body>
+</html>

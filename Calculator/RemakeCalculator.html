@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            background-color: rgb(0, 0, 0);
+        }
+        .outerdiv{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            color: aqua;
+            font-size: 50px;
+        }
+        .innerdiv{
+            width: 300px;
+            height: 500px;
+            background-color: rgb(218, 19, 19);
+            display: flex;
+            flex-wrap: wrap;
+            font-size: 30px;
+            align-content: center;
+            justify-content: center;
+        }
+        .screen{
+            width: 230px;
+            height: 100px;
+            background-color: black;
+            border-radius: 10px;
+            margin: 35px;
+        }
+        .squarebox{
+            width: 70px;
+            height: 60px;
+            background-color: rgb(0, 17, 255);
+            border: 2px solid black;
+            border-radius: 50%;
+        }
+        .equals{
+            flex : 2;
+            background-color: rgb(0, 17, 255);
+            border: 2px solid black;
+            border-radius: 30%;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+
+const container = document.getElementById( 'container' );
+const outerdiv = document.createElement("div");
+outerdiv.classList.add("outerdiv");
+container.appendChild(outerdiv);
+outerdiv.textContent = "Calculator";
+const innerdiv = document.createElement("div");
+innerdiv.classList.add("innerdiv");
+outerdiv.appendChild(innerdiv);
+
+const Numerics = ['0', '1','2','3','4','5','6','7','8','9' ,'C','+' , '-' , '*', '/' , '.', '<' , '%'  , '='];
+
+let num1 = "";
+let num2 = "";
+let operator = "";
+const screen = document.createElement("div");
+screen.classList.add("screen");
+innerdiv.appendChild(screen);
+
+for(let i=0;i<Numerics.length;i++) {
+const squareBox = document.createElement("div");
+squareBox.classList.add("squarebox");
+squareBox.textContent=Numerics[i];
+innerdiv.appendChild(squareBox);
+if(Numerics[i]==='=') {
+    squareBox.setAttribute("class" , "equals")
+}
+squareBox.addEventListener('click',function () {    
+    operation(Numerics[i]);
+    displayonscreen();
+})
+}
+
+
+function operation (variable){
+    if(variable === 'C'){
+        clear();
+    }else if(variable === '<'){
+       removelastcharacter();
+    }else if(variable === '='){
+        calculate();
+    }else if(variable === '*' || variable === '/' || variable === '+' || variable === '*' || variable === '%'){
+        operator = variable;
+    }else if(!operator){
+        num1+=variable;
+    }else if (operator){
+        num2+=variable;
+    }
+}
+
+function removelastcharacter(){
+    if(num1 !== "" && num2 !== ""){
+        screen.textContent = num1 + operator;
+    }else if(num2==""  && operator !=""){
+     screen.textContent = num1;
+    }else{
+        screen.textContent = "";
+    }
+}
+function displayonscreen(){
+    if(num1 !== "" && num2 !== ""){
+        screen.textContent = num1 + operator + num2;
+    }else if(num2==""){
+     screen.textContent = num1+operator;
+    }else{
+        screen.textContent = num1;
+    }
+}
+
+function clear (){
+    num1="";
+    operator="";
+    num2="";
+    displayonscreen();
+}
+
+function calculate(){
+   if(num1 !== "" && operator !=="" && num2 !== ""){
+       const result = operate(parseFloat(num1) , operator , parseFloat(num2)) 
+       if(result){
+        num1=result;
+        // screen.textContent = result ;
+        num2 ="";
+        operator ="";
+        displayonscreen();
+    }
+    console.log(num1);
+   }
+}
+function operate(num1, operator , num2){
+    if(operator =='+') {
+       return add(parseFloat(num1),parseFloat(num2));
+} else if(operator == '-'){
+   return subtract(num1,num2);
+}else if(operator == '*'){
+    return multiply(num1,num2);
+}else if(operator == '/'){
+    return divide(num1,num2);
+}
+}
+function add(num1,num2){
+return num1+num2;
+}
+function subtract(num1,num2){
+   return num1-num2;
+}
+function  multiply(num1,num2) {
+    return num1*num2;   }
+function divide(num1,num2){
+    return num1/num2 ;
+}
+    </script>
+</body>
+</html>
